@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>世界史テスト対策 | 第1・2章</title>
+<style>
+  :root {
+    --primary: #2c5f8a;
+    --accent: #e85d26;
+    --green: #27ae60;
+    --red: #e74c3c;
+    --yellow: #f39c12;
+    --bg: #f4f6f9;
+    --card: #ffffff;
+    --text: #2d3436;
+    --muted: #636e72;
+    --border: #dfe6e9;
+    --radius: 10px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+  header { background: linear-gradient(135deg, var(--primary) 0%, #1a3a5c 100%); color: #fff; padding: 20px 24px 0; }
+  header h1 { font-size: 1.4rem; font-weight: 700; margin-bottom: 4px; }
+  header p { font-size: 0.85rem; opacity: 0.8; margin-bottom: 16px; }
+
+  .tabs { display: flex; gap: 4px; }
+  .tab-btn { padding: 10px 22px; border: none; background: rgba(255,255,255,0.15); color: #fff; border-radius: 8px 8px 0 0; cursor: pointer; font-size: 0.95rem; font-weight: 600; transition: background 0.2s; }
+  .tab-btn.active { background: var(--bg); color: var(--primary); }
+  .tab-btn:hover:not(.active) { background: rgba(255,255,255,0.25); }
+
+  main { padding: 24px 16px; max-width: 900px; margin: 0 auto; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  .score-bar { display: flex; align-items: center; gap: 12px; background: var(--card); border-radius: var(--radius); padding: 12px 18px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .score-bar span { font-weight: 700; font-size: 1.1rem; color: var(--primary); }
+  .score-bar .label { color: var(--muted); font-size: 0.9rem; font-weight: 400; }
+  .reset-btn { margin-left: auto; padding: 8px 18px; background: var(--accent); color: #fff; border: none; border-radius: 6px; cursor: pointer; font-size: 0.9rem; font-weight: 600; transition: opacity 0.2s; }
+  .reset-btn:hover { opacity: 0.85; }
+
+  /* SUMMARY */
+  .chapter-title { font-size: 1.1rem; font-weight: 700; color: var(--primary); border-left: 4px solid var(--accent); padding-left: 10px; margin: 24px 0 12px; }
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-bottom: 8px; }
+  .summary-card { background: var(--card); border-radius: var(--radius); padding: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border-top: 4px solid var(--primary); }
+  .summary-card.ac { border-top-color: var(--accent); }
+  .summary-card.gr { border-top-color: var(--green); }
+  .summary-card.yl { border-top-color: var(--yellow); }
+  .summary-card h3 { font-size: 0.93rem; font-weight: 700; color: var(--primary); margin-bottom: 10px; }
+  .summary-card.ac h3 { color: var(--accent); }
+  .summary-card.gr h3 { color: var(--green); }
+  .summary-card.yl h3 { color: #b7790a; }
+  .summary-card ul { list-style: none; }
+  .summary-card ul li { font-size: 0.87rem; padding: 4px 0; border-bottom: 1px solid var(--border); line-height: 1.55; }
+  .summary-card ul li:last-child { border-bottom: none; }
+  .kw { color: var(--accent); font-weight: 700; }
+  .flow { background: #f0f7ff; border-radius: 6px; padding: 10px 12px; font-size: 0.84rem; line-height: 1.9; margin-top: 8px; }
+  .ar { color: var(--primary); font-weight: 700; }
+
+  /* FILL-IN */
+  .q-block { background: var(--card); border-radius: var(--radius); padding: 18px 20px; margin-bottom: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .q-num { font-size: 0.78rem; color: var(--muted); font-weight: 600; margin-bottom: 6px; }
+  .q-text { font-size: 0.98rem; line-height: 1.75; margin-bottom: 10px; }
+  .blank-input { border: 2px solid var(--border); border-radius: 6px; padding: 6px 10px; font-size: 0.98rem; width: 140px; text-align: center; outline: none; transition: border-color 0.2s; font-family: inherit; }
+  .blank-input:focus { border-color: var(--primary); }
+  .blank-input.ok { border-color: var(--green); background: #eafaf1; }
+  .blank-input.ng { border-color: var(--red); background: #fdedec; }
+  .check-btn { margin-left: 10px; padding: 7px 16px; background: var(--primary); color: #fff; border: none; border-radius: 6px; cursor: pointer; font-size: 0.9rem; font-weight: 600; transition: opacity 0.2s; }
+  .check-btn:hover { opacity: 0.85; }
+  .fb { margin-top: 8px; font-size: 0.88rem; font-weight: 600; display: none; }
+  .fb.show { display: block; }
+  .fb.ok { color: var(--green); }
+  .fb.ng { color: var(--red); }
+  .hint-txt { font-size: 0.8rem; color: var(--muted); margin-top: 4px; }
+
+  /* QUIZ */
+  .quiz-block { background: var(--card); border-radius: var(--radius); padding: 18px 20px; margin-bottom: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .quiz-q { font-size: 0.98rem; font-weight: 600; line-height: 1.6; margin-bottom: 14px; }
+  .choices { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  @media (max-width: 500px) { .choices { grid-template-columns: 1fr; } }
+  .choice-btn { padding: 10px 14px; border: 2px solid var(--border); border-radius: 8px; background: #fff; cursor: pointer; font-size: 0.88rem; text-align: left; transition: all 0.2s; font-family: inherit; line-height: 1.4; }
+  .choice-btn:hover:not(:disabled) { border-color: var(--primary); background: #f0f7ff; }
+  .choice-btn.correct { border-color: var(--green); background: #eafaf1; color: #1a7a40; font-weight: 700; }
+  .choice-btn.wrong { border-color: var(--red); background: #fdedec; color: var(--red); }
+  .explanation { margin-top: 12px; padding: 10px 14px; background: #fffbf0; border-left: 4px solid var(--yellow); border-radius: 0 6px 6px 0; font-size: 0.87rem; line-height: 1.65; display: none; }
+  .explanation.show { display: block; }
+
+  @media (max-width: 600px) {
+    header h1 { font-size: 1.1rem; }
+    .tab-btn { padding: 8px 12px; font-size: 0.82rem; }
+    main { padding: 14px 10px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>世界史テスト対策 ― 第1章・第2章</h1>
+  <p>大航海時代 / 主権国家体制 / イギリス議会政治 / アメリカ独立革命 / フランス革命 / ナポレオン</p>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('summary',this)">📖 まとめ</button>
+    <button class="tab-btn" onclick="switchTab('fill',this)">✏️ 穴埋め問題</button>
+    <button class="tab-btn" onclick="switchTab('quiz',this)">🎯 4択問題</button>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ SUMMARY ============ -->
+<div id="tab-summary" class="tab-panel active">
+
+  <div class="chapter-title">第1章① ヨーロッパ人の海外進出（大航海時代）</div>
+  <div class="card-grid">
+    <div class="summary-card">
+      <h3>大航海時代の背景</h3>
+      <ul>
+        <li>目的：<span class="kw">香辛料</span>を求めてアジアへ直接行きたい</li>
+        <li>→ イスラーム商人を介さず利益を独占したい</li>
+        <li>羅針盤・造船技術・地図の発達が後押し</li>
+        <li>結果：世界の一体化が進む</li>
+      </ul>
+    </div>
+    <div class="summary-card ac">
+      <h3>主な探検家と業績</h3>
+      <ul>
+        <li><span class="kw">コロンブス</span>（スペイン支援）1492年 アメリカ大陸到達</li>
+        <li><span class="kw">ヴァスコ・ダ・ガマ</span>（ポルトガル）インド航路開拓（1498年）</li>
+        <li><span class="kw">マゼラン</span> 世界周航（1519〜22年）</li>
+        <li>ディアス（喜望峰到達）・カボット も重要</li>
+      </ul>
+    </div>
+    <div class="summary-card gr">
+      <h3>トルデシリャス条約（1494年）</h3>
+      <ul>
+        <li><span class="kw">スペイン と ポルトガル</span> が締結</li>
+        <li>大西洋に分界線を設定→世界を二分</li>
+        <li>東（アジア・アフリカ）→ポルトガル</li>
+        <li>西（アメリカ）→スペイン（ブラジルは例外でポルトガル）</li>
+      </ul>
+    </div>
+    <div class="summary-card yl">
+      <h3>コロンブス交換・影響</h3>
+      <ul>
+        <li>新大陸 → 欧：<span class="kw">トマト・じゃがいも・とうもろこし</span></li>
+        <li>欧 → 新大陸：<span class="kw">天然痘などの伝染病・馬・小麦</span></li>
+        <li>先住民が激減（伝染病の影響大）</li>
+        <li>銀の大量流入 → ヨーロッパで価格革命</li>
+      </ul>
+    </div>
+    <div class="summary-card ac">
+      <h3>三角貿易・プランテーション</h3>
+      <ul>
+        <li>欧州<span class="ar">→</span>アフリカ（武器・雑貨）<span class="ar">→</span>アメリカ（<span class="kw">奴隷</span>）<span class="ar">→</span>欧州（砂糖・綿花）</li>
+        <li>1200万人もの奴隷が連行されたとも</li>
+        <li>サトウキビ農場（<span class="kw">プランテーション</span>）で強制労働</li>
+        <li>→ イギリスが資本を蓄積 → 産業革命の資金源へ</li>
+      </ul>
+    </div>
+    <div class="summary-card">
+      <h3>産業革命（18世紀後半〜）</h3>
+      <ul>
+        <li><span class="kw">イギリス</span>が世界に先駆けて開始</li>
+        <li>蒸気機関・紡績機などの機械が発明される</li>
+        <li>綿織物工業 → 鉄鋼・重工業へ発展</li>
+        <li>「<span class="kw">イギリスは世界の工場</span>」と呼ばれる</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="chapter-title">第1章② 宗教改革・科学革命・啓蒙主義</div>
+  <div class="card-grid">
+    <div class="summary-card">
+      <h3>ルターの宗教改革（ドイツ）</h3>
+      <ul>
+        <li><span class="kw">聖書</span>（神の言葉）が最高権威</li>
+        <li><span class="kw">信仰のみ</span>によって救われる</li>
+        <li>免罪符（贖宥状）を痛烈に批判</li>
+        <li>→ プロテスタント（新教）の誕生</li>
+      </ul>
+    </div>
+    <div class="summary-card ac">
+      <h3>カルヴァンの宗教改革（スイス）</h3>
+      <ul>
+        <li><span class="kw">予定説</span>：救われる人は神があらかじめ決めている</li>
+        <li>労働・蓄財を肯定 → 資本主義精神と親和</li>
+        <li>フランス（ユグノー）・オランダ・スコットランドに普及</li>
+      </ul>
+    </div>
+    <div class="summary-card gr">
+      <h3>対抗宗教改革 / イエズス会</h3>
+      <ul>
+        <li>カトリック側の内部改革運動</li>
+        <li><span class="kw">イエズス会</span>設立（ロヨラ）</li>
+        <li><span class="kw">ザビエル</span>：日本・アジアへ布教</li>
+        <li>善行・教育も重視（啓発的）</li>
+      </ul>
+    </div>
+    <div class="summary-card yl">
+      <h3>科学革命 → 啓蒙主義</h3>
+      <ul>
+        <li>科学革命：経験・実験による自然法則の発見</li>
+        <li>真理は聖書ではなく人間の経験で得られる</li>
+        <li>→ <span class="kw">啓蒙主義</span>：理性で社会を改革しよう</li>
+        <li>→ フランス革命・アメリカ独立宣言の思想的基盤へ</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="chapter-title">第1章③ 主権国家体制・絶対王政・イギリス議会政治</div>
+  <div class="card-grid">
+    <div class="summary-card">
+      <h3>主権国家体制とは</h3>
+      <ul>
+        <li>王に権力を集中させる<span class="kw">中央集権化</span></li>
+        <li>当時は地方分権（諸侯が権力をもつ）が一般的</li>
+        <li>神聖ローマ帝国は諸侯が分立→主権国家体制が遅れていた</li>
+        <li>→ 各国が主権国家体制をめざして競争</li>
+      </ul>
+    </div>
+    <div class="summary-card ac">
+      <h3>絶対王政（フランス）</h3>
+      <ul>
+        <li><span class="kw">ルイ14世</span>「<span class="kw">朕は国家なり</span>」（17〜18世紀）</li>
+        <li>王に全権力が集中する絶対王政の典型</li>
+        <li><span class="kw">ベルサイユ宮殿</span>建設（貴族を宮廷に集め弱体化）</li>
+        <li>王権神授説：王の権力は神から与えられた</li>
+      </ul>
+    </div>
+    <div class="summary-card gr">
+      <h3>イギリス議会政治の歩み①</h3>
+      <ul>
+        <li><span class="kw">ジェームズ1世</span>：王権神授説を主張（議会と対立）</li>
+        <li><span class="kw">チャールズ1世</span>：<span class="kw">ピューリタン革命</span>で処刑（1649年）</li>
+        <li><span class="kw">クロムウェル</span>：共和政を樹立・独裁</li>
+        <li>王政復古 → チャールズ2世・ジェームズ2世</li>
+      </ul>
+    </div>
+    <div class="summary-card yl">
+      <h3>イギリス議会政治の歩み②</h3>
+      <ul>
+        <li><span class="kw">名誉革命（1688年）</span>：議会がジェームズ2世を追放</li>
+        <li>ウィリアム3世・メアリ2世を迎える（無血）</li>
+        <li><span class="kw">権利の章典（1689年）</span>：議会の権限を明確化</li>
+        <li>→ <span class="kw">立憲君主制・議院内閣制</span>の確立</li>
+      </ul>
+    </div>
+    <div class="summary-card">
+      <h3>権利の章典 主な内容</h3>
+      <ul>
+        <li>議会の同意なく法律停止・課税は不可</li>
+        <li>議員の発言・討論は自由</li>
+        <li>議会の定期的開催を義務化</li>
+        <li>→ 王が議会を無視して政治できない</li>
+      </ul>
+    </div>
+    <div class="summary-card ac">
+      <h3>ロシアの動向</h3>
+      <ul>
+        <li><span class="kw">南下政策</span>：暖かい海（不凍港）を求めて南へ</li>
+        <li>北極に近い海は凍っており、船が通れない</li>
+        <li><span class="kw">ネルチンスク条約（1689年）</span>：ロシアと清（中国）の国境画定</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="chapter-title">第2章① アメリカ独立革命</div>
+  <div class="card-grid">
+    <div class="summary-card">
+      <h3>背景・七年戦争</h3>
+      <ul>
+        <li>北アメリカ大陸はイギリス・フランス・スペインの植民地</li>
+        <li><span class="kw">七年戦争（1756〜63年）</span>：英仏間の植民地争い</li>
+        <li>戦費がかかり、イギリスが植民地に課税強化</li>
+        <li><span class="kw">印紙法・茶法</span>→植民地人の強い反発</li>
+      </ul>
+    </div>
+    <div class="summary-card ac">
+      <h3>独立への流れ</h3>
+      <div class="flow">
+        課税強化（印紙法・茶法）<span class="ar"> → </span><br>
+        「代表なくして課税なし」<br>
+        <span class="kw">ボストン茶会事件（1773年）</span><span class="ar"> → </span><br>
+        <span class="kw">大陸会議</span>（植民地全体で対抗）<span class="ar"> → </span><br>
+        独立戦争 <span class="ar"> → </span> <span class="kw">独立宣言（1776年）</span>
+      </div>
+    </div>
+    <div class="summary-card gr">
+      <h3>独立宣言の内容</h3>
+      <ul>
+        <li>すべての人は平等に創られた</li>
+        <li>生命・自由・<span class="kw">幸福の追求</span>は奪えない権利</li>
+        <li>政府の正当な権力は人民の同意に基づく</li>
+        <li>トマス・ペイン「<span class="kw">コモンセンス</span>」が世論を後押し</li>
+      </ul>
+    </div>
+    <div class="summary-card yl">
+      <h3>アメリカの政治体制</h3>
+      <ul>
+        <li>初代大統領：<span class="kw">ワシントン</span></li>
+        <li><span class="kw">三権分立</span>：行政（大統領）・立法（議会）・司法（裁判所）</li>
+        <li><span class="kw">連邦制</span>：各州の自治を認めた上で連邦国家を形成</li>
+        <li>相互の抑制・均衡（チェック・アンド・バランス）</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="chapter-title">第2章② フランス革命</div>
+  <div class="card-grid">
+    <div class="summary-card">
+      <h3>旧制度（アンシャン・レジーム）</h3>
+      <ul>
+        <li>第一身分：<span class="kw">聖職者</span>（約0.5%）特権・免税</li>
+        <li>第二身分：<span class="kw">貴族</span>（約1.5%）特権・免税</li>
+        <li>第三身分：<span class="kw">平民</span>（約98%）重税を一手に負担</li>
+        <li>財政悪化 → 貴族にも課税しようとして反発</li>
+      </ul>
+    </div>
+    <div class="summary-card ac">
+      <h3>革命の流れ</h3>
+      <div class="flow">
+        財政危機 <span class="ar">→</span> <span class="kw">全国三部会</span>招集（174年ぶり）<br>
+        <span class="ar">→</span> テニスコートの誓い<br>
+        <span class="ar">→</span> <span class="kw">バスティーユ牢獄襲撃（1789年7月14日）</span><br>
+        <span class="ar">→</span> <span class="kw">人権宣言</span>採択<br>
+        <span class="ar">→</span> 国王処刑 <span class="ar">→</span> 第一共和政
+      </div>
+    </div>
+    <div class="summary-card gr">
+      <h3>人権宣言の内容</h3>
+      <ul>
+        <li>人間は自由かつ<span class="kw">平等</span>に生まれる</li>
+        <li>主権は<span class="kw">国民</span>にある</li>
+        <li>自由・所有・安全・圧政への抵抗は権利</li>
+        <li>所有権は神聖かつ不可侵</li>
+      </ul>
+    </div>
+    <div class="summary-card yl">
+      <h3>フランス革命の意義</h3>
+      <ul>
+        <li>旧体制（封建制・身分制）の打破</li>
+        <li>自由・平等・国民主権の思想を制度化</li>
+        <li>革命思想がヨーロッパ各国に波及</li>
+        <li>アメリカ独立革命と相互に影響しあった</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="chapter-title">第2章③ ナポレオン</div>
+  <div class="card-grid">
+    <div class="summary-card">
+      <h3>ナポレオンの台頭</h3>
+      <ul>
+        <li>本名：<span class="kw">ナポレオン・ボナパルト</span></li>
+        <li>軍人として頭角を現しクーデターで権力掌握</li>
+        <li>第一帝政（<span class="kw">皇帝ナポレオン</span>）樹立</li>
+        <li><span class="kw">ナポレオン法典</span>：法の下の平等・私有財産の保護・契約の自由</li>
+      </ul>
+    </div>
+    <div class="summary-card ac">
+      <h3>ナポレオンのヨーロッパ支配</h3>
+      <ul>
+        <li>軍事力でヨーロッパ各国を征服・支配</li>
+        <li><span class="kw">大陸封鎖令</span>：イギリスとの貿易を禁止（1806年）</li>
+        <li>フランス革命の理念（自由・平等）をヨーロッパへ広める</li>
+        <li>→ 各国でナショナリズムが目覚める</li>
+      </ul>
+    </div>
+    <div class="summary-card gr">
+      <h3>失敗・没落の流れ</h3>
+      <div class="flow">
+        大陸封鎖令でヨーロッパ各国も困窮<br>
+        <span class="ar">→</span> <span class="kw">ロシア遠征（1812年）</span>失敗<br>
+        　（冬の寒さ＋焦土作戦で壊滅）<br>
+        <span class="ar">→</span> 国力低下・反ナポレオン同盟<br>
+        <span class="ar">→</span> <span class="kw">ワーテルローの戦い（1815年）</span>敗北<br>
+        <span class="ar">→</span> セントヘレナ島に島流し
+      </div>
+    </div>
+    <div class="summary-card yl">
+      <h3>ナポレオン敗北の理由</h3>
+      <ul>
+        <li>イギリスは島国 → 軍事征服できない</li>
+        <li>大陸封鎖でヨーロッパ各国の経済も打撃</li>
+        <li>ロシアの広大な国土と厳冬・焦土作戦</li>
+        <li>征服された各国でナショナリズムが高まり抵抗</li>
+      </ul>
+    </div>
+  </div>
+
+</div><!-- /summary -->
+
+
+<!-- ============ FILL-IN ============ -->
+<div id="tab-fill" class="tab-panel">
+  <div class="score-bar">
+    <span class="label">正解数：</span>
+    <span id="fill-score">0</span>
+    <span class="label">/ <span id="fill-total">0</span></span>
+    <button class="reset-btn" onclick="resetFill()">リセット</button>
+  </div>
+  <div id="fill-container"></div>
+</div>
+
+
+<!-- ============ QUIZ ============ -->
+<div id="tab-quiz" class="tab-panel">
+  <div class="score-bar">
+    <span class="label">正解数：</span>
+    <span id="quiz-score">0</span>
+    <span class="label">/ <span id="quiz-total">0</span></span>
+    <button class="reset-btn" onclick="resetQuiz()">リセット</button>
+  </div>
+  <div id="quiz-container"></div>
+</div>
+
+</main>
+
+<script>
+// ── DATA ──────────────────────────────────────────
+const fillData = [
+  { q:"コロンブスが1492年に到達したのは___大陸（カリブ海）。", a:"アメリカ", hint:"新大陸" },
+  { q:"ヴァスコ・ダ・ガマが開拓した___航路（1498年）。", a:"インド", hint:"アジアへの直接ルート" },
+  { q:"スペインとポルトガルの勢力圏を定めた___条約（1494年）。", a:"トルデシリャス", hint:"ポルトガル語の地名" },
+  { q:"コロンブス交換でヨーロッパに伝わった新大陸の野菜は___・じゃがいも・とうもろこし。", a:"トマト", hint:"イタリア料理に欠かせない赤い野菜" },
+  { q:"ルターは「___のみによる救済」を唱えた。", a:"信仰", hint:"行動・善行ではなく心のあり方" },
+  { q:"スイスのカルヴァンが唱えた「神があらかじめ救済者を決めている」という___説。", a:"予定", hint:"英語でPredestination" },
+  { q:"日本にキリスト教を伝えたイエズス会の宣教師___。", a:"ザビエル", hint:"フランシスコ・○○○エル" },
+  { q:"フランスのルイ14世が述べた絶対王政の言葉「___は国家なり」。", a:"朕", hint:"一人称・わたし" },
+  { q:"王の権力は神から与えられたという考えを___という。", a:"王権神授説", hint:"ジェームズ1世が主張" },
+  { q:"チャールズ1世が処刑された___革命（別名：清教徒革命）。", a:"ピューリタン", hint:"英語でPuritan" },
+  { q:"1688年、血を流さずに王を交代させたイギリスの革命を___革命という。", a:"名誉", hint:"Glorious Revolution" },
+  { q:"名誉革命の翌年（1689年）制定された「権利の___」。", a:"章典", hint:"Bill of Rights" },
+  { q:"1689年にロシアと清が結んだ、国境線を定めた___条約。", a:"ネルチンスク", hint:"地名から" },
+  { q:"「代表なくして課税なし」を訴えた植民地人が起こした___茶会事件（1773年）。", a:"ボストン", hint:"マサチューセッツ州の港町" },
+  { q:"独立世論を後押ししたトマス・ペインの著書「___」。", a:"コモンセンス", hint:"Common Sense＝良識" },
+  { q:"アメリカ合衆国初代大統領に就任したのは___。", a:"ワシントン", hint:"首都の名前にもなっている" },
+  { q:"フランスの旧制度を___・レジームという。", a:"アンシャン", hint:"Ancien Régime" },
+  { q:"フランスの旧制度で、人口の約98%を占めた___（第三身分）。", a:"平民", hint:"農民・商人・職人など" },
+  { q:"1789年7月14日、民衆が___牢獄を襲撃しフランス革命が始まった。", a:"バスティーユ", hint:"パリにある要塞型牢獄" },
+  { q:"フランス革命で採択された「___宣言」は自由・平等・国民主権を掲げた。", a:"人権", hint:"Déclaration des droits de l'homme" },
+  { q:"ナポレオンが制定した「___法典」は法の下の平等・私有財産の保護を規定した。", a:"ナポレオン", hint:"彼自身の名前がそのまま法典名に" },
+  { q:"ナポレオンがイギリスを経済的に孤立させるために出した「大陸___令」。", a:"封鎖", hint:"ヨーロッパ大陸をブロック" },
+  { q:"ナポレオンが最終的に敗れた___の戦い（1815年）。", a:"ワーテルロー", hint:"現ベルギーの地名" },
+];
+
+const quizData = [
+  {
+    q:"1492年にアメリカ大陸に到達したコロンブスを支援した国はどこか？",
+    choices:["ポルトガル","スペイン","イギリス","フランス"],
+    correct:1,
+    exp:"コロンブスはスペインのイサベル女王の支援で大西洋を横断し、カリブ海のバハマ諸島に到達しました。"
+  },
+  {
+    q:"インド航路を開拓したヴァスコ・ダ・ガマを支援した国はどこか？",
+    choices:["スペイン","イギリス","ポルトガル","オランダ"],
+    correct:2,
+    exp:"ヴァスコ・ダ・ガマはポルトガルの支援でアフリカ南端（喜望峰）を回り、インドのカリカットに到達しました（1498年）。"
+  },
+  {
+    q:"トルデシリャス条約（1494年）を結んだ二国の組み合わせは？",
+    choices:["スペインとイギリス","ポルトガルとフランス","スペインとポルトガル","イギリスとオランダ"],
+    correct:2,
+    exp:"トルデシリャス条約はスペインとポルトガルが締結。大西洋に分界線を引き、東（アジア・アフリカ）はポルトガル、西（アメリカ）はスペインの勢力圏とした。"
+  },
+  {
+    q:"ルターの宗教改革が起きた国はどこか？",
+    choices:["スイス","フランス","イギリス","ドイツ"],
+    correct:3,
+    exp:"ルターはドイツ（神聖ローマ帝国）のヴィッテンベルクで95か条の論題を発表し宗教改革を開始（1517年）しました。"
+  },
+  {
+    q:"カルヴァンが唱えた「神が救われる人をあらかじめ決めている」という説を何というか？",
+    choices:["信仰義認説","予定説","免罪符説","天命説"],
+    correct:1,
+    exp:"予定説はスイスのジュネーヴを拠点としたカルヴァンの主張。労働・蓄財を肯定し、資本主義精神の発展に影響したとされます。"
+  },
+  {
+    q:"フランスのルイ14世が建設した絶対王政の象徴となった宮殿はどれか？",
+    choices:["バッキンガム宮殿","サンスーシ宮殿","ベルサイユ宮殿","ウィンザー城"],
+    correct:2,
+    exp:"ルイ14世はパリ郊外のベルサイユに豪華な宮殿を建設。貴族を宮廷に集住させ政治から遠ざけることで権力を一元化しました。"
+  },
+  {
+    q:"イギリスで名誉革命が起きた年はいつか？",
+    choices:["1649年","1660年","1688年","1707年"],
+    correct:2,
+    exp:"1688年の名誉革命では議会がジェームズ2世を追放し、オランダからウィリアム3世とメアリ2世を迎えました。無血で成功したため「名誉」革命と呼ばれます。"
+  },
+  {
+    q:"権利の章典が制定されたのはいつか？",
+    choices:["1688年","1689年","1707年","1714年"],
+    correct:1,
+    exp:"権利の章典（Bill of Rights）は1689年制定。「議会の同意なく法律の停止・課税はできない」など議会の権限を明確にし、立憲君主制の基礎となりました。"
+  },
+  {
+    q:"ボストン茶会事件（1773年）の直接のきっかけとなった法律はどれか？",
+    choices:["印紙法","茶法","砂糖法","航海法"],
+    correct:1,
+    exp:"1773年の茶法（Tea Act）で東インド会社に茶の独占販売権が与えられ、植民地商人が打撃を受けました。植民地人が茶を港に投棄したのがボストン茶会事件です。"
+  },
+  {
+    q:"アメリカ独立宣言が採択されたのはいつか？",
+    choices:["1763年","1773年","1775年","1776年"],
+    correct:3,
+    exp:"アメリカ独立宣言は1776年7月4日（現在の独立記念日）に大陸会議で採択。「すべての人間は平等に創られた」という啓蒙思想を宣言しました。"
+  },
+  {
+    q:"アメリカの三権分立で「行政」を担うのはどれか？",
+    choices:["連邦議会","連邦裁判所","大統領","州議会"],
+    correct:2,
+    exp:"アメリカの三権分立は行政（大統領）・立法（連邦議会）・司法（連邦裁判所）。それぞれが互いを抑制・均衡（チェック・アンド・バランス）させます。"
+  },
+  {
+    q:"フランスの旧制度（アンシャン・レジーム）で「第二身分」にあたるのはどれか？",
+    choices:["聖職者","貴族","平民","農奴"],
+    correct:1,
+    exp:"第一身分が聖職者、第二身分が貴族、第三身分が平民。第一・第二身分は免税特権を持ちましたが、人口の約98%を占める第三身分が重税を負わされていました。"
+  },
+  {
+    q:"フランス革命の始まりとなった出来事（1789年7月14日）はどれか？",
+    choices:["全国三部会の開催","テニスコートの誓い","バスティーユ牢獄の襲撃","人権宣言の採択"],
+    correct:2,
+    exp:"1789年7月14日、パリの民衆が絶対王政の象徴であるバスティーユ牢獄を襲撃。この日がフランス革命の始まりとされ、現在もフランスの革命記念日（祝日）です。"
+  },
+  {
+    q:"フランス人権宣言の内容として正しいのはどれか？",
+    choices:["王に絶対的権威がある","主権は国民にある","貴族の特権を保護する","宗教の統一を定める"],
+    correct:1,
+    exp:"人権宣言（1789年）は「主権はすべて国民にある」「人間は自由かつ平等に生まれる」「所有権は神聖かつ不可侵」を宣言。ルソーらの啓蒙思想の影響を受けています。"
+  },
+  {
+    q:"ナポレオン法典の特徴として正しいのはどれか？",
+    choices:["貴族の特権を拡大した","封建的身分制度を復活させた","法の下の平等・私有財産の保護を定めた","農奴制を導入した"],
+    correct:2,
+    exp:"ナポレオン法典（1804年）は「法の下の平等」「私有財産の不可侵」「契約の自由」を三大原則とし、フランス革命の理念を法律として定着させました。ヨーロッパ各国の民法にも大きな影響を与えました。"
+  },
+  {
+    q:"ナポレオンが大陸封鎖令を出した目的はどれか？",
+    choices:["ロシアへの侵攻を防ぐ","イギリスを経済的に孤立させる","アメリカとの貿易を拡大する","アフリカを植民地化する"],
+    correct:1,
+    exp:"大陸封鎖令（1806年）は、ヨーロッパ大陸の国々にイギリスとの貿易を禁じるもの。島国のイギリスを軍事的に征服できないため経済的に締め上げようとしましたが、各国の不満が高まり失敗。"
+  },
+  {
+    q:"ナポレオンのロシア遠征（1812年）が失敗した主な理由はどれか？",
+    choices:["ロシア軍の圧倒的な軍事力","ロシアの広大な国土・厳しい冬・焦土作戦","イギリス軍の直接介入","ナポレオンが病気になった"],
+    correct:1,
+    exp:"ロシアは退却しながら農地・村を焼き払う焦土作戦を実施。ナポレオン軍は食料も補給もなく進軍し、厳しい冬が追い打ちをかけ60万の軍勢が壊滅的打撃を受けました。"
+  },
+  {
+    q:"ナポレオンが最終的に敗北した戦い（1815年）はどれか？",
+    choices:["トラファルガーの海戦","アウステルリッツの戦い","ライプツィヒの戦い","ワーテルローの戦い"],
+    correct:3,
+    exp:"1815年のワーテルローの戦い（現ベルギー）でナポレオンはイギリス・プロイセン連合軍に敗れ、セントヘレナ島に島流しとなりました。「ワーテルロー」は今も「惨敗」を意味する言葉として使われます。"
+  },
+  {
+    q:"コロンブス交換で「新大陸から旧大陸（ヨーロッパ）」へ伝わったものはどれか？",
+    choices:["小麦","馬","トマト","綿花"],
+    correct:2,
+    exp:"コロンブス交換では新大陸からヨーロッパへトマト・じゃがいも・とうもろこし・タバコなどが伝わり、ヨーロッパの食文化を大きく変えました。逆方向（欧→新大陸）には天然痘・馬・小麦などが伝わり、先住民に壊滅的影響を与えました。"
+  },
+  {
+    q:"三角貿易の流れとして正しいのはどれか？",
+    choices:[
+      "ヨーロッパ→奴隷→アメリカ→武器→アフリカ",
+      "ヨーロッパ（武器等）→アフリカ、奴隷→アメリカ、農産物→ヨーロッパ",
+      "アフリカ→香辛料→アジア→ヨーロッパ",
+      "アメリカ→銀→ヨーロッパ→アフリカ"
+    ],
+    correct:1,
+    exp:"三角貿易：①欧州がアフリカへ武器・雑貨を輸出、②アフリカから奴隷をアメリカへ、③アメリカの砂糖・綿花などを欧州へ。約1200万人のアフリカ人が奴隷として連行されたといわれます。"
+  },
+];
+
+// ── TABS ──────────────────────────────────────────
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ── FILL-IN ───────────────────────────────────────
+let fillState = [];
+
+function buildFill() {
+  const c = document.getElementById('fill-container');
+  c.innerHTML = '';
+  fillState = fillData.map(() => ({ done: false, ok: false }));
+  document.getElementById('fill-total').textContent = fillData.length;
+  document.getElementById('fill-score').textContent = '0';
+
+  fillData.forEach((item, i) => {
+    const d = document.createElement('div');
+    d.className = 'q-block';
+    d.innerHTML =
+      `<div class="q-num">問 ${i+1} / ${fillData.length}</div>` +
+      `<div class="q-text">${item.q.replace('___', `<input class="blank-input" id="fi-${i}" type="text" placeholder="答えを入力" autocomplete="off">`)}</div>` +
+      `<div style="display:flex;align-items:center;flex-wrap:wrap;gap:6px">` +
+        `<button class="check-btn" onclick="checkFill(${i})">確認する</button>` +
+        `<span class="hint-txt">ヒント：${item.hint}</span>` +
+      `</div>` +
+      `<div class="fb" id="fb-${i}"></div>`;
+    c.appendChild(d);
+    setTimeout(() => {
+      const inp = document.getElementById(`fi-${i}`);
+      if (inp) inp.addEventListener('keydown', e => { if (e.key === 'Enter') checkFill(i); });
+    }, 0);
+  });
+}
+
+function norm(s) {
+  return s.trim().replace(/\s+/g,'').toLowerCase()
+    .replace(/[ａ-ｚＡ-Ｚ０-９]/g, c => String.fromCharCode(c.charCodeAt(0)-0xFEE0));
+}
+
+function checkFill(i) {
+  if (fillState[i].done) return;
+  fillState[i].done = true;
+  const inp = document.getElementById(`fi-${i}`);
+  const fb  = document.getElementById(`fb-${i}`);
+  const ans = fillData[i].a;
+  const ua  = norm(inp.value);
+  const ca  = norm(ans);
+  const ok  = ua === ca || (ua.length >= Math.max(2, Math.floor(ca.length * 0.7)) && (ua.includes(ca) || ca.includes(ua)));
+  fillState[i].ok = ok;
+  inp.disabled = true;
+  inp.classList.add(ok ? 'ok' : 'ng');
+  fb.classList.add('show', ok ? 'ok' : 'ng');
+  fb.textContent = ok ? `正解！ ✓  「${ans}」` : `不正解 ✗  正解：「${ans}」`;
+  document.getElementById('fill-score').textContent = fillState.filter(s=>s.ok).length;
+}
+
+function resetFill() { buildFill(); }
+
+// ── QUIZ ──────────────────────────────────────────
+let quizState = [];
+
+function buildQuiz() {
+  const c = document.getElementById('quiz-container');
+  c.innerHTML = '';
+  quizState = quizData.map(() => ({ done: false, ok: false }));
+  document.getElementById('quiz-total').textContent = quizData.length;
+  document.getElementById('quiz-score').textContent = '0';
+
+  quizData.forEach((item, i) => {
+    const d = document.createElement('div');
+    d.className = 'quiz-block';
+    const nums = ['①','②','③','④'];
+    const btns = item.choices.map((c,j) =>
+      `<button class="choice-btn" id="qc-${i}-${j}" onclick="checkQuiz(${i},${j})">${nums[j]} ${c}</button>`
+    ).join('');
+    d.innerHTML =
+      `<div class="q-num">問 ${i+1} / ${quizData.length}</div>` +
+      `<div class="quiz-q">${item.q}</div>` +
+      `<div class="choices">${btns}</div>` +
+      `<div class="explanation" id="exp-${i}">💡 ${item.exp}</div>`;
+    c.appendChild(d);
+  });
+}
+
+function checkQuiz(qi, ci) {
+  if (quizState[qi].done) return;
+  quizState[qi].done = true;
+  const ok = ci === quizData[qi].correct;
+  quizState[qi].ok = ok;
+  quizData[qi].choices.forEach((_, j) => {
+    const b = document.getElementById(`qc-${qi}-${j}`);
+    b.disabled = true;
+    if (j === quizData[qi].correct) b.classList.add('correct');
+    else if (j === ci) b.classList.add('wrong');
+  });
+  const exp = document.getElementById(`exp-${qi}`);
+  exp.classList.add('show');
+  const body = exp.innerHTML.replace('💡 ','');
+  if (ok) {
+    exp.style.borderLeftColor = 'var(--green)';
+    exp.style.background = '#f0faf4';
+    exp.innerHTML = `✅ 正解！ ${body}`;
+  } else {
+    exp.style.borderLeftColor = 'var(--red)';
+    exp.style.background = '#fff5f5';
+    exp.innerHTML = `❌ 不正解。正解は「${quizData[qi].choices[quizData[qi].correct]}」<br>${body}`;
+  }
+  document.getElementById('quiz-score').textContent = quizState.filter(s=>s.ok).length;
+}
+
+function resetQuiz() { buildQuiz(); }
+
+// ── INIT ──────────────────────────────────────────
+buildFill();
+buildQuiz();
+</script>
+</body>
+</html>
